@@ -22,4 +22,10 @@ Note: This may result in duplicate counts if a single artifact digest is associa
 
 ## Running the Script
 
+To count (1) the number of repos with signed artifacts and (2) the number of tags associated with a signed artifact:
+
 `./measure.sh <registry-url.com>`
+
+To count only the number of repos with signed artifacts:
+
+`./measure.sh <registry-url.com> --early-exit`
