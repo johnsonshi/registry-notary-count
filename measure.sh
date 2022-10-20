@@ -71,8 +71,10 @@ for repo in $repos; do
     # Get All Tags in a Repo and Iterate Through Each One
     ###############################################################################
 
-    if ! tags=$(curl -sSL "$registry_url/v2/$repo/tags/list" | jq -r '.tags[]'); then
+    cmd="curl -sSL $registry_url/v2/$repo/tags/list | jq -r '.tags[]'"
+    if ! tags=$(eval "$cmd"); then
         skipped_repos_due_to_error=$(( skipped_repos_due_to_error + 1 ))
+        eval "$cmd"
         logger --stderr "[!] Unable to get tags for repo '$repo'. Skipping..."
         continue
     fi
@@ -89,8 +91,10 @@ for repo in $repos; do
         # Check if the tag's artifact has an associated signature.
         # If so, then the tag's artifact is considered signed.
         # Also check the exit code of the piped command because `oras discover` has a tendency to randomly fail with a server error.
-        if ! n_signature_reference_artifacts=$(oras discover --artifact-type "$NOTARY_V2_SIGNATURE_ARTIFACT_TYPE" -o json "$registry_url/$repo:$tag" | jq -r '.referrers' | jq length); then
+        cmd="oras discover --artifact-type $NOTARY_V2_SIGNATURE_ARTIFACT_TYPE -o json $registry_url/$repo:$tag | jq -r '.referrers' | jq length"
+        if ! n_signature_reference_artifacts=$(eval "$cmd"); then
             skipped_tags_due_to_error=$(( skipped_tags_due_to_error + 1 ))
+            eval "$cmd"
             logger --stderr "[!] Unable to get reference artifacts for repo '$repo' and tag '$tag'. Skipping..."
             continue
         fi
@@ -111,7 +115,6 @@ for repo in $repos; do
     fi
 
     echo "$registry_url,$repo,$is_signed_artifact_found_in_repo" >> "$NOTARY_V2_SIGNATURE_METRICS_REPO_BREAKDOWN_FILE"
-
 done
 
 ###############################################################################
