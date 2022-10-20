@@ -19,10 +19,12 @@ fi
 
 if ! command -v docker &> /dev/null; then
     echo "[*] Docker CLI not found! Please ensure that it is installed. See https://docs.docker.com/get-docker/"
+    exit 1
 fi
 
 if ! command -v oras &> /dev/null; then
     echo "[*] ORAS CLI not found! Please ensure that it is installed. See https://oras.land/cli/"
+    exit 1
 fi
 
 ###############################################################################
