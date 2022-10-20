@@ -14,6 +14,7 @@ Note: This may result in duplicate counts if a single artifact digest is associa
 
 ## Requirements
 
+* `jq` utility command
 * Docker CLI – https://docs.docker.com/get-docker/
   * Please ensure that the Docker CLI has registry read permissions and is authenticated. See https://docs.docker.com/engine/reference/commandline/login/
 * ORAS CLI – https://oras.land/cli/

@@ -67,9 +67,6 @@ for repo in $repos; do
 
     is_signed_artifact_found_in_repo=0
 
-    # DEBUG
-    repo="oss/etcd-io/etcd"
-
     ###############################################################################
     # Get All Tags in a Repo and Iterate Through Each One
     ###############################################################################
@@ -115,8 +112,6 @@ for repo in $repos; do
 
     echo "$registry_url,$repo,$is_signed_artifact_found_in_repo" >> "$NOTARY_V2_SIGNATURE_METRICS_REPO_BREAKDOWN_FILE"
 
-    # DEBUG
-    break
 done
 
 ###############################################################################
