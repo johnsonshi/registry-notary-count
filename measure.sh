@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -aeo pipefail
-
 if [ -z "$1" ]; then
     echo "Measure the number of repos and tags within a registry that have signed artifacts."
     echo "An artifact is considered signed if it has an OCI Reference Artifact with artifactType '$notary_signature_artifact_type'."
